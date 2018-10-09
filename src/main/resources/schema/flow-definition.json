@@ -1,0 +1,116 @@
+{
+  "id": "flow",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "A definition of a data flow for EEA IoT platform",
+  "name": "flow",
+  "title": "Flow",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "package": {
+      "type": "string"
+    },
+    "properties": {
+      "type" : "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/property"
+      }
+    },
+    "nodes" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/node"
+      }
+    },
+    "links" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/link"
+      }
+    },
+    "created-time": {
+      "type": "string"
+    },
+    "modified-time": {
+      "type": "string"
+    },
+    "creator": {
+      "type": "string"
+    }
+  },
+  "required": ["name", "nodes"],
+  "definitions": {
+    "link": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The identifier of link"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of link, when there are two links connect to the same node, the names should be different"
+        },
+        "input-node": {
+          "type": "integer",
+          "description": "The identifier of the input node"
+        },
+        "output-node": {
+          "type": "integer",
+          "description": "The identifier of the output node"
+        },
+        "schema": {
+          "type": "object",
+          "$ref": "./data-schema.json"
+        }
+      },
+      "required": ["id", "schema", "input-node", "output-node"]
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        
+        "node-definition": {
+          "type": "string",
+          "description": "Node type should be the id of the definition of one installed node"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "schema-in": {
+          "type": "object",
+          "$ref": "./data-schema.json"
+        },
+        "schema-out": {
+          "type": "object",
+          "$ref": "./data-schema.json"
+        }
+      }
+    },
+    "property": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

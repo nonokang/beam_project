@@ -1,0 +1,87 @@
+{
+  "id": "node-schema",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "A definition of a node plugin for EEA IoT platform",
+  "name": "Node",
+  "title": "Node",
+  "type": "object",
+  "properties": {
+  	"id": {
+  	  "type": "string"
+  	},
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "shape": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "description": "The detail type of node"
+    },
+    "catalog": {
+      "type": "string",
+      "description": "The catalog of node, it is based on the node type"
+    },
+    "class-name": {
+      "type": "string",
+      "description": "The class name of the Node"
+    },
+    "class-package": {
+      "type": "string"
+    },
+    "builder-class-name": {
+      "type": "string",
+      "description": "The class name of the node builder"
+    },
+    "builder-class-package": {
+      "type": "string",
+      "description": "The package name of the node builder"
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./property-schema.json"
+      }
+    },
+    "input-schema": {
+      "type": "object",
+      "$ref": "./data-schema.json",
+      "description": "If the input-schema is not defined, the schema should be output schema of previous node."
+    },
+    "output-schema": {
+      "type": "object",
+      "$ref": "./data-schema.json",
+      "description": "If the output-schema not defined, it means the output-schema is the same with input."
+    },
+    "additional-input-ports": {
+      "type": "array",
+      "items" : {
+      	"$ref": "./data-schema.json"
+      }
+    },    
+    "additional-output-ports": {
+      "type": "array",
+      "items" : {
+      	"$ref": "./data-schema.json"
+      }
+    },
+    "help-info": {
+      "type": "string"
+    }, 
+    "package" : {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "jar",
+    "version",
+    "class-name",
+    "class-package"
+  ]
+}

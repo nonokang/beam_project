@@ -1,0 +1,14 @@
+{
+	"namespace": "com.ericsson.eea.iot.flow.node",
+	"type": "record",
+	"name": "DefaultCombineOutputSchema",
+	"fields": [
+		{
+		  "name": "key", 
+		  "type": "string"
+		},	{
+		  "name": "value", 
+		  "type": "double"
+		}	
+	]
+}

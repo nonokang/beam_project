@@ -1,0 +1,14 @@
+{
+	"namespace": "com.ericsson.eea.iot.flow.node",
+	"type": "record",
+	"name": "DefaultValueCounter",
+	"fields": [
+		{
+		  "name": "key", 
+		  "type": "string"
+		},	{
+		  "name": "counter", 
+		  "type": "long"
+		}	
+	]
+}

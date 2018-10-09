@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ab</groupId>
+  <artifactId>beam_project</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>beam_project Maven Webapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <beam.version>2.5.0</beam.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.24</version>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.groovy</groupId>
+		<artifactId>groovy-all</artifactId>
+		<version>2.4.12</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.auto.value</groupId>
+		<artifactId>auto-value</artifactId>
+		<version>1.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.avro</groupId>
+		<artifactId>avro</artifactId>
+		<version>1.8.2</version>
+	</dependency>
+	
+	<!-- apache beam所需jar包 -->
+    <dependency>
+	    <groupId>org.apache.beam</groupId>
+	    <artifactId>beam-sdks-java-core</artifactId>
+	    <version>${beam.version}</version>
+	    <type>pom</type>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.beam</groupId>
+		<artifactId>beam-runners-direct-java</artifactId>
+		<version>${beam.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.beam</groupId>
+		<artifactId>beam-sdks-java-io-kafka</artifactId>
+		<version>${beam.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.beam</groupId>
+		<artifactId>beam-sdks-java-io-jdbc</artifactId>
+		<version>${beam.version}</version>
+	</dependency>
+	
+	<!-- json转javabean所需jar包 -->
+	<dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.4</version>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.5.4</version>
+    </dependency>
+    
+    <!-- avsc转javabean所需的jar包 -->
+	<dependency>
+		<groupId>org.apache.avro</groupId>
+		<artifactId>avro</artifactId>
+        <version>1.8.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.avro</groupId>
+		<artifactId>avro-ipc</artifactId>
+        <version>1.8.2</version>
+	</dependency>
+	
+	<!-- 谷歌的自动生成代码jar包 -->
+	<dependency>
+		<groupId>com.google.auto.value</groupId>
+		<artifactId>auto-value</artifactId>
+        <version>1.5</version>
+	</dependency>
+  </dependencies>
+
+  <build>
+    <finalName>beam_project</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        
+		<!-- json转javabean所需插件 -->
+		<plugin>
+			<groupId>org.jsonschema2pojo</groupId>
+			<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+			<version>0.4.37</version>
+			<configuration>
+				<sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>	<!--资源目录-->
+				<targetPackage>com.ab.test</targetPackage>
+        		<!--<outputDirectory>${basedir}/src/main/java/com/ab/bean</outputDirectory>  输出java bean文件的目录-->
+        		<!--<addCompileSourceRoot>true</addCompileSourceRoot>-->
+        		<!--<sourceType>json</sourceType>	资源类型-->
+        		<!--<annotationStyle>none</annotationStyle>-->
+			</configuration>
+			<executions>
+				<execution>
+					<goals>
+						<goal>generate</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+		
+    	<!-- avsc转javabean所需的插件 -->
+		<plugin>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro-maven-plugin</artifactId>
+			<version>1.8.2</version>
+			<executions>
+				<execution>
+					<phase>generate-sources</phase>
+					<goals>
+						<goal>schema</goal>
+					</goals>
+					<configuration>
+						<stringType>String</stringType>
+						<sourceDirectory>${basedir}/src/main/resources/avro/</sourceDirectory>
+						<testSourceDirectory>${basedir}/src/test/resources/avro/</testSourceDirectory>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId><!-- 主要是对资源文件进行处理；如动态的修改资源文件参数 -->
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId><!-- 测试运行器；主要用来执行单元测试 -->
+          <version>2.20.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId><!-- 主要是用于将artifact部署到远程仓库中 -->
+          <version>2.8.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

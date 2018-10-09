@@ -1,0 +1,52 @@
+{
+  "id": "package-schema",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "A definition of a package of node plugins for IoT Analytics platform",
+  "name": "Package",
+  "title": "Package",
+  "type": "object",
+  "properties": {
+  	"name": {
+      "type": "string",
+      "description": "The package name"
+  	},  	
+  	"jar": {
+      "type": "string",
+      "description": "The jar package name"
+    },
+    "group-id": {
+      "type": "string"
+    },
+    "artifact-id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "creator": {
+      "type": "string"
+    },
+    "third-parties": {
+      "type": "array",
+      "items": {
+      	"$ref": "#/definitions/library"
+      }
+    }
+  },
+  "definitions": {
+  	"library" : {
+  	  "type": "object",
+  	  "properties": {
+  	  	"group-id": {
+  	  	  "type": "string"
+  	  	},
+  	  	"artifact-id": {
+  	  	  "type": "string"
+  	  	},
+  	  	"version": {
+  	  	  "type": "string"
+  	  	}
+  	  }
+  	}
+  }
+}

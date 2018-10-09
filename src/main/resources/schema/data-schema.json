@@ -1,0 +1,50 @@
+{
+  "id": "data-schema",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "name": "data-schema",
+  "title": "Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The schema name"
+    },
+    "type": {
+      "type": "string",
+      "description": "The schema type, it could be built-in data type or 'customized' if should be customized."
+    },
+    "customizable": {
+      "type": "boolean",
+      "description": "If true, it means the node support customized data schema for processed data, otherwise, only fixed data format supported"
+    },
+    "fields" : {
+      "type": "array",
+      "description": "If there is no key fields, the fields represent the data itself, otherwise, the fields mean the value of the data in the key-value pair.",
+      "items": {
+        "$ref": "#/definitions/field"
+      }
+    }
+  },
+  "required": [
+    "name", "type", "customizable"
+  ],
+  "definitions": {
+    "field": {
+      "name": "Field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "Should be one of primary types"
+        },
+        "isNullable": {
+          "type": "boolean",
+          "default": "true"
+        }
+      }
+    }
+  }
+}
