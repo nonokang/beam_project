@@ -26,11 +26,17 @@ public class BJdbcIo {
         // Then create the pipeline.
         Pipeline p = Pipeline.create(options);
 
-        String jdbcDriver = "com.mysql.jdbc.Driver";
+        /*String jdbcDriver = "com.mysql.jdbc.Driver";
         String jdbcUrl = "jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8";
         String jdbcUser = "root";
         String jdbcPassword = "root";
-        String querySql = "select * from a_spark_text";
+        String querySql = "select * from a_spark_text";*/
+
+        String jdbcDriver = "org.postgresql.Driver";
+        String jdbcUrl = "jdbc:postgresql://172.17.8.101:32345/postgresdb";
+        String jdbcUser = "pgadmin";
+        String jdbcPassword = "admin123";
+        String querySql = "select * from aaa";
 
         /*PCollection<KV<String, String>> lines1 = p.apply(
                 "ReadLines", JdbcIO.<KV<String, String>>read().withDataSourceConfiguration(
@@ -76,8 +82,8 @@ public class BJdbcIo {
                                 BJdbcBean bean = new BJdbcBean();
                                 bean.setId(resultSet.getInt(1));
                                 bean.setName(resultSet.getString(2));
-                                bean.setCode(resultSet.getString(3));
-                                bean.setOperateStatus(resultSet.getString(4));
+                                /*bean.setCode(resultSet.getString(3));
+                                bean.setOperateStatus(resultSet.getString(4));*/
                                 System.out.println(bean.toString());
                                 return bean;
                             }
@@ -90,7 +96,7 @@ public class BJdbcIo {
                     public String apply(BJdbcBean input) {
                         return input.getId() + "," + input.getName() + "," + input.getCode() + "," + input.getOperateStatus();
                     }
-                })).apply(TextIO.write().to("wpk").withShardNameTemplate("-001-mysql").withNumShards(1).withSuffix(".txt"));//txt|csv|json
+                })).apply(TextIO.write().to("wpk").withShardNameTemplate("-001-postgres").withNumShards(1).withSuffix(".txt"));//txt|csv|json
 
         System.out.println(lines3.toString());
         p.run().waitUntilFinish();

@@ -1,20 +1,25 @@
 package com.ab.test;
 
-import org.apache.beam.runners.direct.DirectRunner;
+import org.apache.beam.runners.flink.FlinkPipelineOptions;
+import org.apache.beam.runners.flink.FlinkRunner;
+import org.apache.beam.runners.flink.FlinkRunnerRegistrar;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.values.KV;
-import org.apache.beam.sdk.values.PCollection;
 
-public class CTextIo {
+public class FlinkTest {
 
     public static void main(String[] arg){
         // Start by defining the options for the pipeline.
         PipelineOptions options = PipelineOptionsFactory.create();
-        options.setRunner(DirectRunner.class);
+        FlinkOptions fo = new FlinkOptions();
+        fo.setFlinkMaster("172.17.8.101:31123");
+        fo.setAppName("flink-wpk-test");
+        FlinkRunner fr = FlinkRunner.fromOptions(fo);
+        options.setRunner(FlinkRunner.class);
         // Then create the pipeline.
         Pipeline p = Pipeline.create(options);
         p.apply("get-test-content", TextIO.read().from("C:\\Users\\ennwpae\\Desktop\\apache_beam.txt"))

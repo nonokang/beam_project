@@ -17,7 +17,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <beam.version>2.5.0</beam.version>
+	  <!--<beam.version>2.8.0</beam.version>-->
+	  <beam.version>2.5.0</beam.version>
   </properties>
 
   <dependencies>
@@ -31,6 +32,11 @@
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 		<version>5.1.24</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>9.4-1206-jdbc42</version>
 	</dependency>
 	<dependency>
 		<groupId>org.codehaus.groovy</groupId>
@@ -70,8 +76,14 @@
 		<artifactId>beam-sdks-java-io-jdbc</artifactId>
 		<version>${beam.version}</version>
 	</dependency>
-	
-	<!-- json转javabean所需jar包 -->
+	<dependency>
+	  	<groupId>org.apache.beam</groupId>
+	  	<artifactId>beam-runners-flink_2.11</artifactId>
+	  	<version>${beam.version}</version>
+	</dependency>
+
+
+	  <!-- json转javabean所需jar包 -->
 	<dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
